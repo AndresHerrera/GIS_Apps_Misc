@@ -1,0 +1,223 @@
+MAP
+	NAME comuna3
+		SIZE 650 500
+		STATUS ON
+		#minx, miny, maxx, maxy
+		# xMín,yMín 105436,109107 : xMáx,yMáx 115393,115625
+		EXTENT 109427 109106 112789 111723
+		
+		SHAPEPATH "shapes/"
+		FONTSET "librerias/fonts/fonts.txt"
+		SYMBOLSET "librerias/symbols/symbols.sym"
+		
+		IMAGECOLOR 255 255 255
+		UNITS meters
+
+	WEB
+		IMAGEPATH "C:/ms4w/Apache/htdocs/bancoscomuna3/tmp/"
+		IMAGEURL "tmp/"
+	END
+	
+	REFERENCE  
+		IMAGE 'mapaclave_179x143.gif'
+		EXTENT 105436 109107 115393 115625
+		STATUS ON
+		COLOR -1 -1 -1
+		OUTLINECOLOR 255 0 0
+		SIZE 200 143      
+	END
+	
+	LAYER
+		NAME "Norte"
+		TYPE POINT
+		STATUS ON
+		TRANSFORM OFF
+		POSTLABELCACHE TRUE
+		FEATURE
+			POINTS 
+				600 35
+			END
+		END
+		CLASS
+			SYMBOL 'rosavientos'
+			COLOR 0 0 0
+			OUTLINECOLOR 0 0 0
+			STYLE END
+		END
+	END
+	
+	LEGEND 
+		IMAGECOLOR 255 255 255 
+		KEYSIZE 18 12 
+		KEYSPACING 5 5
+		LABEL   
+			SIZE SMALL  
+			TYPE BITMAP   
+			BUFFER 0   
+			COLOR 0 0 30    
+			FORCE FALSE 
+			MINDISTANCE -1  
+			MINFEATURESIZE -1  
+			OFFSET 0 0   
+			PARTIALS TRUE 
+		END 
+		POSITION LL  
+		STATUS ON  
+	END
+	
+	SCALEBAR
+		IMAGECOLOR 255 255 255 
+		
+		LABEL
+			COLOR 0 0 0 
+			SIZE SMALL
+		END
+		SIZE 400 4
+		COLOR 255 255 255
+
+		BACKGROUNDCOLOR 0 0 0
+		OUTLINECOLOR 0 0 0
+
+		UNITS KILOMETERS
+		INTERVALS 4
+		STATUS ON
+	END
+	
+	
+
+
+
+
+	
+	LAYER
+		NAME "comunas_cali"
+		STATUS ON
+		DATA "comunas_cali.shp"
+		TYPE POLYGON
+		CLASS
+			NAME "Comunas Cali"
+			STYLE
+				COLOR 173 216 230
+				OUTLINECOLOR 16 78 139
+			END
+		END
+	END
+	
+	LAYER
+		NAME "barrios_comuna3"
+		STATUS ON
+		DATA "barrios_comuna3.shp"
+		TYPE POLYGON
+		
+		LABELITEM "NOM_BARRIO"
+		LABELCACHE ON
+		POSTLABELCACHE FALSE
+		#CLASS
+		#	NAME "Barrios Comuna 3"
+		#	STYLE
+		#		COLOR 193 205 205
+		#		OUTLINECOLOR 104 131 139
+		#	END
+		#END
+		
+		CLASS
+			NAME "Barrios Comuna 3"
+			LABEL
+				FONT "sans"
+				TYPE TRUETYPE
+				PRIORITY 1
+				BUFFER 1
+				SIZE 7
+				MAXSIZE 256
+				MINSIZE 4
+				COLOR 0 0 0
+				OUTLINECOLOR 0 255 0
+				BACKGROUNDSHADOWSIZE 1 1
+				POSITION CC
+				ANTIALIAS FALSE
+				FORCE FALSE
+				PARTIALS TRUE
+			END
+			STYLE
+				ANTIALIAS FALSE
+				SYMBOL 0
+				SIZE 1
+				ANGLE 0
+				OPACITY 100
+				COLOR 166 196 24
+				OUTLINECOLOR 116 137 16
+				WIDTH 1
+			END
+		END
+	END
+	
+	LAYER
+		NAME "vias_comuna3"
+		STATUS ON
+		DATA "vias_comuna3.shp"
+		TYPE LINE
+		
+		CLASS
+			
+			NAME "Vias Comuna 3"
+			
+			EXPRESSION ([tipo]=99)
+			STYLE
+				COLOR 0 0 0
+				OUTLINECOLOR 0 0 0
+			END
+		END
+		
+		CLASS
+			EXPRESSION ([tipo]=1)
+			STYLE
+				COLOR 255 0 0
+				OUTLINECOLOR 0 0 0
+				SYMBOL 'tent'
+				SIZE 1
+			END
+		END
+		
+	END
+	
+	
+	LAYER
+    NAME "Ages"
+    TYPE CHART
+    CONNECTIONTYPE postgis
+    CONNECTION "user=postgres password=fromsky dbname=bancosc3 host=localhost"
+    DATA "the_geom from (select * from barrios_comuna3) as cc using unique gid using srid=-1"
+    
+	#PROCESSING "CHART_TYPE=pie"
+	
+	PROCESSING "CHART_TYPE=BAR"
+	
+	PROCESSING "CHART_SIZE_RANGE = area_ha 100 200 0 300"
+
+
+    PROCESSING "CHART_SIZE=30"
+    STATUS ON
+    CLASS
+        NAME "Area x Comuna"
+        STYLE
+            SIZE [area_ha]
+            COLOR 255 244 255
+        END
+    END
+    CLASS
+        NAME "Comuna x Comuna"
+        STYLE
+            SIZE [comuna]
+            COLOR 255 0 0
+        END
+    END
+    CLASS
+        NAME "gid"
+        STYLE
+            SIZE [gid]
+            COLOR 0 255 0
+        END
+    END
+END
+
+END

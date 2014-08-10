@@ -1,0 +1,266 @@
+MAP
+	NAME Ejemplo1
+		SIZE 600 400
+		EXTENT  1088767.75 889144.4375 1090961.875 891220
+	    SHAPEPATH "C:/ms4w/Apache/htdocs/ejemplossig2/spatial/"
+	WEB
+		IMAGEPATH "C:/ms4w/Apache/htdocs/ejemplossig2/tmp/"
+		IMAGEURL "tmp/"
+	END
+
+	LAYER
+		NAME "lotes"
+		STATUS ON
+		
+		DATA "the_geom from (select *  from lotes ) as mzyum using unique gid using srid=-1"
+		CONNECTION "user=postgres password=fromsky dbname=ejemplossig2 host=localhost"
+		CONNECTIONTYPE postgis
+			
+		TYPE POLYGON
+		
+		#LABELITEM "area"
+		CLASS
+			STYLE
+				COLOR 192 255 62
+				OUTLINECOLOR 98 0 111
+				SIZE 11
+			END
+			
+			LABEL 
+				SIZE SMALL
+				COLOR 0 0 0
+			END
+			
+		END
+	END
+	
+	
+	LAYER
+		NAME "vias"
+		STATUS ON
+		
+		DATA "the_geom from (select *  from vias) as mzyum using unique gid using srid=-1"
+		CONNECTION "user=postgres password=fromsky dbname=ejemplossig2 host=localhost"
+		CONNECTIONTYPE postgis
+			
+		TYPE LINE
+		
+		#LABELITEM "area"
+		CLASS
+			STYLE
+				COLOR 255 0 0
+				#OUTLINECOLOR 98 0 111
+				SIZE 11
+			END
+			
+			LABEL 
+				SIZE SMALL
+				COLOR 0 0 0
+			END
+			
+		END
+	END
+	
+	LAYER
+		NAME "rios"
+		STATUS ON
+		
+		DATA "the_geom from (select *  from rios) as mzyum using unique gid using srid=-1"
+		CONNECTION "user=postgres password=fromsky dbname=ejemplossig2 host=localhost"
+		CONNECTIONTYPE postgis
+			
+		TYPE LINE
+		
+		#LABELITEM "area"
+		CLASS
+			STYLE
+				COLOR 0 0 255
+				#OUTLINECOLOR 98 0 111
+				SIZE 11
+			END
+			
+			LABEL 
+				SIZE SMALL
+				COLOR 0 0 0
+			END
+			
+		END
+	END
+	
+	
+	
+	LAYER
+		NAME "poblacion"
+		STATUS ON
+		
+		DATA "the_geom from (select *  from poblacion) as mzyum using unique gid using srid=-1"
+		CONNECTION "user=postgres password=fromsky dbname=ejemplossig2 host=localhost"
+		CONNECTIONTYPE postgis
+			
+		TYPE POLYGON
+		
+		#LABELITEM "area"
+		CLASS
+			STYLE
+				COLOR 190 190 190
+				OUTLINECOLOR 0 0 0
+				SIZE 11
+			END
+			
+			LABEL 
+				SIZE SMALL
+				COLOR 0 0 0
+			END
+			
+		END
+	END
+	
+	LAYER
+		NAME "thiessen"
+		STATUS ON
+		
+		DATA "the_geom from (select *  from thiessen) as mzyum using unique gid using srid=-1"
+		CONNECTION "user=postgres password=fromsky dbname=ejemplossig2 host=localhost"
+		CONNECTIONTYPE postgis
+			
+		TYPE POLYGON
+		
+		#LABELITEM "area"
+		CLASS
+			STYLE
+				#COLOR 190 190 190
+				OUTLINECOLOR 255 0 255
+				SIZE 11
+			END
+			
+			LABEL 
+				SIZE SMALL
+				COLOR 0 0 0
+			END
+			
+		END
+	END
+	
+	
+	LAYER
+		NAME "reservorio"
+		STATUS ON
+		
+		DATA "the_geom from (select *  from reservorio) as mzyum using unique gid using srid=-1"
+		CONNECTION "user=postgres password=fromsky dbname=ejemplossig2 host=localhost"
+		CONNECTIONTYPE postgis
+			
+		TYPE POLYGON
+		
+		#LABELITEM "area"
+		CLASS
+			STYLE
+				COLOR 0 0 255
+				OUTLINECOLOR 255 0 255
+				SIZE 11
+			END
+			
+			LABEL 
+				SIZE SMALL
+				COLOR 0 0 0
+			END
+			
+		END
+	END 
+	
+	LAYER
+		NAME "pluviometros"
+		STATUS ON
+		
+		DATA "the_geom from (select *  from pluviometros) as mzyum using unique gid using srid=-1"
+		CONNECTION "user=postgres password=fromsky dbname=ejemplossig2 host=localhost"
+		CONNECTIONTYPE postgis
+			
+		TYPE POINT
+		
+		#LABELITEM "area"
+		CLASS
+			STYLE
+				COLOR 255 255 190
+				OUTLINECOLOR 0 0 0
+				SIZE 8
+				SYMBOL 'circle'
+			END
+			
+			LABEL 
+				SIZE SMALL
+				COLOR 0 0 0
+			END
+			
+		END
+	END
+	
+	
+  SYMBOL 
+    NAME 'circle' 
+    TYPE ELLIPSE 
+    POINTS 1 1 END 
+    FILLED TRUE 
+  END
+  
+  
+  
+  LAYER
+		NAME "lotes_a"
+		STATUS ON
+		
+		DATA "the_geom from (select * from lotes where area > 10 ) as mzyum using unique gid using srid=-1"
+		CONNECTION "user=postgres password=fromsky dbname=ejemplossig2 host=localhost"
+		CONNECTIONTYPE postgis
+			
+		TYPE POLYGON
+		
+		#LABELITEM "area"
+		CLASS
+			STYLE
+				COLOR 255 0 0
+				OUTLINECOLOR 98 0 111
+				SIZE 11
+			END
+			
+			LABEL 
+				SIZE SMALL
+				COLOR 0 0 0
+			END
+			
+		END
+	END
+	
+	
+	
+	
+	LAYER
+		NAME "buffer"
+		STATUS ON
+		
+		DATA "the_geom from (select gid, buffer(the_geom, 500) as the_geom  from pluviometros) as mzyum using unique gid using srid=-1"
+		CONNECTION "user=postgres password=fromsky dbname=ejemplossig2 host=localhost"
+		CONNECTIONTYPE postgis
+			
+		TYPE POLYGON
+		TRANSPARENCY 20
+		#LABELITEM "area"
+		CLASS
+			STYLE
+				COLOR 0 0 255
+				OUTLINECOLOR 0 0 0
+				SIZE 11
+			END
+			
+			LABEL 
+				SIZE SMALL
+				COLOR 0 0 0
+			END
+			
+		END
+	END 
+	
+	
+	
+	
+END
